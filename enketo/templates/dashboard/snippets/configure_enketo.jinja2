@@ -1,0 +1,26 @@
+{% if activeUser.super == 1 %}
+    <div class="modal inmodal" id="configure_enketo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ _('Close') }}</span></button>
+                    <i class="fa fa-laptop modal-icon"></i>
+                    <h4 class="modal-title">{{ _('Configure Enketo') }}</h4>
+                    <small class="font-bold">{{ _('Enketo is an open source technology for collecting ODK data using Internet browsers') }}</small>
+                </div>
+                <form method="post" action="{{ request.route_url('enketo_store_settings',userid=activeUser.login) }}">
+                    {{ form.secure_form(request) }}
+                    <div class="modal-body">
+                        {{ _('To configure Enketo please provide the URL address and access key.') }}
+                        <div class="form-group"><label>URL</label> <input type="url" name="url" value="{{ enketo.url }}" placeholder="{{ _('Enter here the URL of Enketo') }}" class="form-control"></div>
+                        <div class="form-group"><label>Key</label> <input type="text" name="key" value="{{ enketo.key }}" placeholder="{{ _('Enter here your Enketo access key') }}" class="form-control"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">{{ _('Close') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ _('Save settings') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endif %}

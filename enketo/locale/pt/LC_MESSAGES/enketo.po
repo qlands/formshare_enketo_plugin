@@ -1,0 +1,78 @@
+# Portuguese translations for enketo.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the enketo project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: enketo 1.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-03-19 19:22-0600\n"
+"PO-Revision-Date: 2020-03-19 19:22-0600\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: pt <LL@li.org>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Generated-By: Babel 2.7.0\n"
+
+#: enketo/views.py:91
+msgid "Error configuring Enketo "
+msgstr "Erro ao configurar a Pesquisa"
+
+#: enketo/views.py:102
+msgid "Error accessing Enketo server"
+msgstr "Erro de servidor Levantamento Acessando"
+
+#: enketo/views.py:107
+msgid "Enketo hasn't been configured yet"
+msgstr "Enketo não foi ainda configurado"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:10
+msgid "Copy to clipboard"
+msgstr "Copiar para área de transferência"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:12
+msgid "Generate URL"
+msgstr "gerar URL"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:15
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:17
+msgid "Collect data using Enketo"
+msgstr "Recolher os dados utilizando Enketo"
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:6
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:19
+msgid "Close"
+msgstr "Fechar"
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:8
+msgid "Configure Enketo"
+msgstr "configure Poll"
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:9
+msgid ""
+"Enketo is an open source technology for collecting ODK data using Internet "
+"browsers"
+msgstr ""
+"Enketo é uma tecnologia de código aberto para coleta de dados ODK usando "
+"navegadores da Internet"
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:14
+msgid "To configure Enketo please provide the URL address and access key."
+msgstr ""
+"Para configurar Enketo por favor fornecer o endereço URL e chave de acesso."
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:15
+msgid "Enter here the URL of Enketo"
+msgstr "Digite aqui o URL de Enketo"
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:16
+msgid "Enter here your Enketo access key"
+msgstr "Digite aqui sua chave de acesso Enketo"
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:20
+msgid "Save settings"
+msgstr "Salvar configurações"

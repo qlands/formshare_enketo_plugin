@@ -1,0 +1,18 @@
+{% extend_me %}
+
+{% block body_end %}
+    {{ super() }}
+    {% include 'dashboard/snippets/configure_enketo.jinja2' %}
+{% endblock body_end %}
+
+{% block settings_plugin_items %}
+    {# We call super to not owerwrite other plugins #}
+    {{ super() }}
+    <div class="setings-item default-skin">
+        <span class="skin-name ">
+            <a data-toggle="modal" data-target="#configure_enketo">
+                Enketo
+            </a>
+        </span>
+    </div>
+{% endblock settings_plugin_items %}

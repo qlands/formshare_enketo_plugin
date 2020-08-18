@@ -1,0 +1,9 @@
+# Extract the messages from your plugin. Run every time translations change
+- python setup.py extract_messages
+# Initialize the catalog. (Run one for each language code)
+- python setup.py init_catalog -l [language_code]
+# Update the catalog. Run every time translations change
+- python setup.py update_catalog
+# Translate each of the .po files for each language in the locale directory
+# Compile the catalog. Run every time translations change. Run once after deployment
+- python setup.py compile_catalog

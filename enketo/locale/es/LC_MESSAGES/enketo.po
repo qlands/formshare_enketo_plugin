@@ -1,0 +1,103 @@
+# Spanish translations for enketo.
+# Copyright (C) 2019 ORGANIZATION
+# This file is distributed under the same license as the enketo project.
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+# Carlos Quiros <cquiros@qlands.com>, 2019, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: enketo 1.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-03-19 19:22-0600\n"
+"PO-Revision-Date: 2020-03-19 19:29-0600\n"
+"Last-Translator: Carlos Quiros <cquiros@qlands.com>\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Generated-By: Babel 2.7.0\n"
+"X-Generator: Lokalize 2.0\n"
+
+# | msgid "Configure Enketo"
+#: enketo/views.py:91
+msgid "Error configuring Enketo "
+msgstr "Error al configurar Enketo"
+
+#: enketo/views.py:102
+msgid "Error accessing Enketo server"
+msgstr "Error conectando con el servidor de Enketo"
+
+#: enketo/views.py:107
+msgid "Enketo hasn't been configured yet"
+msgstr "Enketo no se ha configurado todavía"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:10
+msgid "Copy to clipboard"
+msgstr "Copiar al portapapeles"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:12
+msgid "Generate URL"
+msgstr "Generar URL"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:15
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:17
+msgid "Collect data using Enketo"
+msgstr "Recolectar datos usando Enketo"
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:6
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:19
+msgid "Close"
+msgstr "Cerrar"
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:8
+msgid "Configure Enketo"
+msgstr "Configuración de Enketo"
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:9
+msgid ""
+"Enketo is an open source technology for collecting ODK data using Internet "
+"browsers"
+msgstr ""
+"Enketo es una tecnología de acceso libre para recolectar datos ODK usando el"
+" navegador"
+"de Internet"
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:14
+msgid "To configure Enketo please provide the URL address and access key."
+msgstr ""
+"Para configurar Enketo favor indique la dirección URL y la llave de acceso"
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:15
+msgid "Enter here the URL of Enketo"
+msgstr "Ingrese aquí el URL a Enketo"
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:16
+msgid "Enter here your Enketo access key"
+msgstr "Ingrese aquí su llave de acceso a Enketo"
+
+#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:20
+msgid "Save settings"
+msgstr "Salvar parámetros"
+
+#~ msgid "Just a message from the plugin"
+#~ msgstr ""
+
+#~ msgid "My private page"
+#~ msgstr ""
+
+#~ msgid "Formshare - My private page"
+#~ msgstr ""
+
+#~ msgid "The body goes here"
+#~ msgstr ""
+
+#~ msgid "My public page"
+#~ msgstr ""
+
+#~ msgid "My body goes here"
+#~ msgstr ""
+
+#~ msgid "My version of FormShare"
+#~ msgstr ""

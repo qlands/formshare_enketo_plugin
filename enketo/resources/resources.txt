@@ -1,0 +1,22 @@
+You can add the following code in plugin.py to add custom JS and CSS resources
+
+1. Add "plugins.implements(plugins.IResource)"" to the class definition
+
+2. Add and edit the following code to the plugin implementation
+    def add_libraries(self,config):
+        #We add here our new library using the resources directory of the plugin
+        libraries = []
+        libraries.append(u.addLibrary('mylibrary','resources'))
+        return libraries
+
+    def add_JSResources(self, config):
+        #You can add your JS resources here
+        myJS = []
+        myJS.append(u.addJSResource('mylibrary','myJSResource','relative/path/to/resources/myresource.js'))
+        return myJS
+
+    def add_CSSResources(self, config, loadedCSSResources):
+        #You can add your CSS resources here
+        myCSS = []
+        myCSS.append(u.addCSSResource('mylibrary', 'myCSSResource', 'relative/path/to/resources/myresource.css'))
+        return myCSS
