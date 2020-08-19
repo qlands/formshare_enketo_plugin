@@ -1,13 +1,15 @@
 {% extend_me %}
 
 {% block links_extra_content %}
-    {% if enketo %}
+    {{ super() }}
     <hr>
     Enketo URL:<br/>
     <div class="input-group">
         <input type="text" id="enketo_url" readonly value="{{ formDetails.enketo_url }}" class="form-control">
         <span class="input-group-append">
-            <a id="enketo_url_copy" class="btn btn-white btn-bitbucket clipboard" data-clipboard-text="{{ formDetails.enketo_url }}" title="{{ _('Copy to clipboard') }}"><i class="far fa-copy"></i></a>
+            {% if formDetails.enketo_url  %}
+                <a id="enketo_url_copy" class="btn btn-white btn-bitbucket clipboard" data-clipboard-text="{{ formDetails.enketo_url }}" title="{{ _('Copy to clipboard') }}"><i class="far fa-copy"></i></a>
+            {% endif %}
             {% if projectDetails.access_type < 4 %}
                 <a class="btn btn-white btn-bitbucket" onclick="get_enketo_configuration();" title="{{ _('Generate URL') }}"><i class="fas fa-sync-alt"></i></a>
             {% endif %}
@@ -18,5 +20,4 @@
             {% endif %}
         </span>
     </div>
-    {% endif %}
 {% endblock links_extra_content %}

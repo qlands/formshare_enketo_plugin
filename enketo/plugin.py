@@ -1,6 +1,6 @@
 import formshare.plugins as plugins
 import formshare.plugins.utilities as u
-from .views import EnketoStoreSettingsView, GenerateEnketoURLView
+from .views import GenerateEnketoURLView
 import sys
 import os
 from formshare.processes.db.project import get_project_code_from_id
@@ -17,8 +17,6 @@ class enketo(plugins.SingletonPlugin):
     plugins.implements(plugins.IRoutes)
     plugins.implements(plugins.IConfig)
     plugins.implements(plugins.ITranslation)
-    plugins.implements(plugins.IDashBoardView)
-    plugins.implements(plugins.IFormDetailsView)
     plugins.implements(plugins.ISchema)
     plugins.implements(plugins.IForm)
 
@@ -30,12 +28,6 @@ class enketo(plugins.SingletonPlugin):
     def after_mapping(self, config):
         # We add here a new route /json that returns a JSON
         custom_map = [
-            u.add_route(
-                "enketo_store_settings",
-                "/user/{userid}/plugins/enketo/store_settings",
-                EnketoStoreSettingsView,
-                None,
-            ),
             u.add_route(
                 "enketo_get_url",
                 "/user/{userid}/project/{projcode}/form/{formid}/plugins/enketo/start",
@@ -58,19 +50,6 @@ class enketo(plugins.SingletonPlugin):
 
     def get_translation_domain(self):
         return "enketo"
-
-    # Implement IDashBoardView functions so the Enketo settings are available in the view
-    def after_dashboard_processing(self, request, class_data, context):
-        if class_data["user"].super == 1:
-            settings = u.FormShareSettings(request)
-            context["enketo"] = settings.get("enketo")
-        return context
-
-    # Implement IIFormDetailsView functions so the Enketo settings are available in the view
-    def after_form_details_processing(self, request, class_data, context):
-        settings = u.FormShareSettings(request)
-        context["enketo"] = settings.get("enketo")
-        return context
 
     # Implements ISchema. This will include a field called Enketo_url as part of a form DB schema
     def update_schema(self, config):
@@ -107,36 +86,34 @@ class enketo(plugins.SingletonPlugin):
             form_url = request.route_url(
                 "project_details", userid=user_id, projcode=project_code
             )
-            settings = u.FormShareSettings(request)
-            enketo_settings = settings.get("enketo")
-            if enketo_settings:
-                survey_data = {"server_url": form_url, "form_id": form_id}
-                survey_data = json.loads(json.dumps(survey_data))
-                enketo_survey_url = urljoin(enketo_settings["url"], "/api/v2/survey")
-                try:
-                    r = requests.post(
-                        enketo_survey_url,
-                        data=survey_data,
-                        auth=(enketo_settings["key"], ""),
-                    )
-                    if r.status_code == 200 or r.status_code == 201:
-                        enketo_url = json.loads(r.text)["url"]
-                        mapped_data = map_to_schema(Odkform, {"enketo_url": enketo_url})
-                        request.dbsession.query(Odkform).filter(
-                            Odkform.project_id == project_id
-                        ).filter(Odkform.form_id == form_id).update(mapped_data)
-                    else:
-                        log.error(
-                            "ENKETO PLUGIN. Unable to activate survey with URL {}. Status code: {}".format(
-                                form_url, r.status_code
-                            )
-                        )
-                except Exception as e:
+
+            survey_data = {"server_url": form_url, "form_id": form_id}
+            survey_data = json.loads(json.dumps(survey_data))
+            enketo_survey_url = urljoin(request.registry.settings.get("enketo.url"), "/api/v2/survey")
+            try:
+                r = requests.post(
+                    enketo_survey_url,
+                    data=survey_data,
+                    auth=(request.registry.settings.get("enketo.apikey"), ""),
+                )
+                if r.status_code == 200 or r.status_code == 201:
+                    enketo_url = json.loads(r.text)["url"]
+                    mapped_data = map_to_schema(Odkform, {"enketo_url": enketo_url})
+                    request.dbsession.query(Odkform).filter(
+                        Odkform.project_id == project_id
+                    ).filter(Odkform.form_id == form_id).update(mapped_data)
+                else:
                     log.error(
-                        "ENKETO PLUGIN. Unable to activate survey with URL {}. Error: {}".format(
-                            form_url, str(e)
+                        "ENKETO PLUGIN. Unable to activate survey with URL {}. Status code: {}".format(
+                            form_url, r.status_code
                         )
                     )
+            except Exception as e:
+                log.error(
+                    "ENKETO PLUGIN. Unable to activate survey with URL {}. Error: {}".format(
+                        form_url, str(e)
+                    )
+                )
 
     def before_updating_form(
         self, request, form_type, user_id, project_id, form_id, form_data
@@ -157,20 +134,18 @@ class enketo(plugins.SingletonPlugin):
             form_url = request.route_url(
                 "project_details", userid=user_id, projcode=project_code
             )
-            settings = u.FormShareSettings(request)
-            enketo_settings = settings.get("enketo")
-            if enketo_settings:
-                survey_data = {"server_url": form_url, "form_id": form_id}
-                survey_data = json.loads(json.dumps(survey_data))
-                enketo_survey_url = urljoin(enketo_settings["url"], "/api/v2/survey")
-                r = requests.delete(
-                    enketo_survey_url,
-                    data=survey_data,
-                    auth=(enketo_settings["key"], ""),
-                )
-                if r.status_code != 204:
-                    log.error(
-                        "ENKETO PLUGIN. Unable to deactivate survey with URL {}. Status code: {}".format(
-                            form_url, r.status_code
-                        )
+
+            survey_data = {"server_url": form_url, "form_id": form_id}
+            survey_data = json.loads(json.dumps(survey_data))
+            enketo_survey_url = urljoin(request.registry.settings.get("enketo.url"), "/api/v2/survey")
+            r = requests.delete(
+                enketo_survey_url,
+                data=survey_data,
+                auth=(request.registry.settings.get("enketo.apikey"), ""),
+            )
+            if r.status_code != 204:
+                log.error(
+                    "ENKETO PLUGIN. Unable to deactivate survey with URL {}. Status code: {}".format(
+                        form_url, r.status_code
                     )
+                )

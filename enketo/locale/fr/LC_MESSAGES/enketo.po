@@ -1,82 +1,45 @@
 # French translations for enketo.
 # Copyright (C) 2019 ORGANIZATION
 # This file is distributed under the same license as the enketo project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
 #
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+# Carlos Quiros <cquiros@qlands.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: enketo 1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-03-19 19:22-0600\n"
-"PO-Revision-Date: 2019-12-08 18:25-0500\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: fr <LL@li.org>\n"
+"POT-Creation-Date: 2020-08-19 09:54-0600\n"
+"PO-Revision-Date: 2020-08-19 10:18-0600\n"
+"Last-Translator: Carlos Quiros <cquiros@qlands.com>\n"
 "Language: fr\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"Generated-By: Babel 2.7.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+"X-Generator: Lokalize 19.12.3\n"
 
-#: enketo/views.py:91
+#: enketo/views.py:59
 msgid "Error configuring Enketo "
-msgstr "Erreur lors de la configuration de l'Enquête"
+msgstr "Erreur lors de la configuration d'Enketo"
 
-#: enketo/views.py:102
+#: enketo/views.py:70
 msgid "Error accessing Enketo server"
-msgstr "Erreur d'accès au serveur Survey"
-
-#: enketo/views.py:107
-msgid "Enketo hasn't been configured yet"
-msgstr "Enketo n'a pas encore été configuré"
+msgstr "Erreur de connexion au serveur Enketo"
 
 #: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:10
 msgid "Copy to clipboard"
-msgstr "Copier dans le presse-papier"
+msgstr "Copie dans le presse-papiers"
 
 #: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:12
 msgid "Generate URL"
-msgstr "générer URL"
+msgstr "Générer l'URL"
 
 #: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:15
 #: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:17
 msgid "Collect data using Enketo"
-msgstr "Recueillir des données à l'aide Enketo"
-
-#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:6
-#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:19
-msgid "Close"
-msgstr "Fermer"
-
-#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:8
-msgid "Configure Enketo"
-msgstr "Configurer le sondage"
-
-#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:9
-msgid ""
-"Enketo is an open source technology for collecting ODK data using Internet "
-"browsers"
-msgstr ""
-"Enketo est une technologie open source pour la collecte de données ODK "
-"utilisant des navigateurs Internet"
-
-#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:14
-msgid "To configure Enketo please provide the URL address and access key."
-msgstr ""
-"Pour configurer Enketo s'il vous plaît fournir l'adresse URL et la clé "
-"d'accès."
-
-#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:15
-msgid "Enter here the URL of Enketo"
-msgstr "Entrez ici l'URL de Enketo"
-
-#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:16
-msgid "Enter here your Enketo access key"
-msgstr "Entrez ici votre clé d'accès Enketo"
-
-#: enketo/templates/dashboard/snippets/configure_enketo.jinja2:20
-msgid "Save settings"
-msgstr "Enregistrer les paramètres"
+msgstr "Recueillir des données à l'aide d'Enketo"
 
 #~ msgid "Just a message from the plugin"
 #~ msgstr ""
@@ -98,3 +61,37 @@ msgstr "Enregistrer les paramètres"
 
 #~ msgid "My version of FormShare"
 #~ msgstr ""
+
+#~ msgid "Enketo hasn't been configured yet"
+#~ msgstr "Enketo n'a pas encore été configuré"
+
+#~ msgid "Close"
+#~ msgstr "Fermer"
+
+#~ msgid "Configure Enketo"
+#~ msgstr "Configurer le sondage"
+
+#~ msgid ""
+#~ "Enketo is an open source technology "
+#~ "for collecting ODK data using Internet"
+#~ " browsers"
+#~ msgstr ""
+#~ "Enketo est une technologie open source"
+#~ " pour la collecte de données ODK "
+#~ "utilisant des navigateurs Internet"
+
+#~ msgid "To configure Enketo please provide the URL address and access key."
+#~ msgstr ""
+#~ "Pour configurer Enketo s'il vous plaît"
+#~ " fournir l'adresse URL et la clé "
+#~ "d'accès."
+
+#~ msgid "Enter here the URL of Enketo"
+#~ msgstr "Entrez ici l'URL de Enketo"
+
+#~ msgid "Enter here your Enketo access key"
+#~ msgstr "Entrez ici votre clé d'accès Enketo"
+
+#~ msgid "Save settings"
+#~ msgstr "Enregistrer les paramètres"
+

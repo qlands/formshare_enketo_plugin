@@ -76,7 +76,7 @@ Start the plug-in
   #formshare.plugins = examplePlugin
   formshare.plugins = enketo
   
-  enketo.url = http://localhost:8005/enketo
+  enketo.url = http://localhost:8005/enketo/
   enketo.apikey = myNewSecretAPIKey
   ```
 - Run FormShare again

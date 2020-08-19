@@ -2,7 +2,6 @@
 
 {% block scripts %}
     {{ super() }}
-    {% if enketo %}
         {% if projectDetails.access_type < 4 %}
             <script>
                 function get_enketo_configuration()
@@ -22,11 +21,6 @@
                         }
                     });
                 }
-
-                {#$(document).ready(function() {#}
-                {#    #}
-                {# });#}
             </script>
         {% endif %}
-    {% endif %}
 {% endblock scripts %}
