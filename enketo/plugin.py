@@ -89,7 +89,7 @@ class enketo(plugins.SingletonPlugin):
 
             survey_data = {"server_url": form_url, "form_id": form_id}
             survey_data = json.loads(json.dumps(survey_data))
-            enketo_survey_url = urljoin(request.registry.settings.get("enketo.url"), "/api/v2/survey")
+            enketo_survey_url = urljoin(request.registry.settings.get("enketo.url"), "api/v2/survey")
             try:
                 r = requests.post(
                     enketo_survey_url,
@@ -137,7 +137,7 @@ class enketo(plugins.SingletonPlugin):
 
             survey_data = {"server_url": form_url, "form_id": form_id}
             survey_data = json.loads(json.dumps(survey_data))
-            enketo_survey_url = urljoin(request.registry.settings.get("enketo.url"), "/api/v2/survey")
+            enketo_survey_url = urljoin(request.registry.settings.get("enketo.url"), "api/v2/survey")
             r = requests.delete(
                 enketo_survey_url,
                 data=survey_data,
