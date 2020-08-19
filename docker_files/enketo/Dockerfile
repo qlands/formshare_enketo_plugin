@@ -1,4 +1,4 @@
-FROM kobotoolbox/enketo_express:1.86.2
+FROM kobotoolbox/enketo_express:1.86.3
 
 ENV ENKETO_SRC_DIR=/srv/src/enketo_express
 
