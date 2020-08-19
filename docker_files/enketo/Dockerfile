@@ -15,7 +15,14 @@ RUN mkdir -p ${ENKETO_SRC_DIR}/setup/docker/secrets
 RUN mkdir ${ENKETO_SRC_DIR}/checksum
 VOLUME ${ENKETO_SRC_DIR}/setup/docker/secrets
 VOLUME ${ENKETO_SRC_DIR}/config
-COPY ./docker_files/config.json ${ENKETO_SRC_DIR}/config
+RUN mkdir ${ENKETO_SRC_DIR}/first_config
+COPY ./docker_files/config.json ${ENKETO_SRC_DIR}/first_config
+COPY ./docker_files/express.js ${ENKETO_SRC_DIR}/first_config
+COPY ./docker_files/sample.env ${ENKETO_SRC_DIR}/first_config
+COPY ./docker_files/start.sh ${ENKETO_SRC_DIR}/setup/docker/start.sh
+
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.6.0/wait /wait
+RUN chmod +x /wait
 
 EXPOSE 8005
 ENTRYPOINT ["/srv/src/enketo_express/setup/docker/start.sh"]

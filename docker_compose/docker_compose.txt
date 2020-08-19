@@ -1,0 +1,13 @@
+Before you run docker-compose you need to
+
+1) Install docker-compose and give it enough memory
+sudo apt-get install -y docker-compose
+
+2) Run the following commands to store the FormShare data outside the docker containers
+sudo mkdir /opt/enketo
+whoami=$(whoami)
+sudo chown $whoami /opt/enketo
+mkdir /opt/enketo/secrets
+mkdir /opt/enketo/config
+mkdir /opt/enketo/redis
+mkdir /opt/enketo/redis_cache
