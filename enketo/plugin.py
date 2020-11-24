@@ -138,14 +138,21 @@ class enketo(plugins.SingletonPlugin):
             survey_data = {"server_url": form_url, "form_id": form_id}
             survey_data = json.loads(json.dumps(survey_data))
             enketo_survey_url = urljoin(request.registry.settings.get("enketo.url"), "api/v2/survey")
-            r = requests.delete(
-                enketo_survey_url,
-                data=survey_data,
-                auth=(request.registry.settings.get("enketo.apikey"), ""),
-            )
-            if r.status_code != 204:
+            try:
+                r = requests.delete(
+                    enketo_survey_url,
+                    data=survey_data,
+                    auth=(request.registry.settings.get("enketo.apikey"), ""),
+                )
+                if r.status_code != 204:
+                    log.error(
+                        "ENKETO PLUGIN. Unable to deactivate survey with URL {}. Status code: {}".format(
+                            form_url, r.status_code
+                        )
+                    )
+            except Exception as e:
                 log.error(
-                    "ENKETO PLUGIN. Unable to deactivate survey with URL {}. Status code: {}".format(
-                        form_url, r.status_code
+                    "ENKETO PLUGIN. Unable to delete survey with URL {}. Error: {}".format(
+                        form_url, str(e)
                     )
                 )
