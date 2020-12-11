@@ -40,12 +40,30 @@ class GenerateEnketoURLView(u.FormSharePrivateView):
                     auth=(self.request.registry.settings.get("enketo.apikey"), ""),
                 )
                 if r.status_code == 200 or r.status_code == 201:
-                    enketo_url = json.loads(r.text)["url"]
-                    mapped_data = map_to_schema(Odkform, {"enketo_url": enketo_url})
-                    self.request.dbsession.query(Odkform).filter(
-                        Odkform.project_id == project_id
-                    ).filter(Odkform.form_id == form_id).update(mapped_data)
-                    return {"status": 200, "enketo_url": enketo_url, "message": ""}
+                    enketo_survey_url = urljoin(self.request.registry.settings.get("enketo.url"), "api/v2/survey/offline")
+                    r = requests.post(
+                        enketo_survey_url,
+                        data=survey_data,
+                        auth=(self.request.registry.settings.get("enketo.apikey"), ""),
+                    )
+                    if r.status_code == 200 or r.status_code == 201:
+                        enketo_url = json.loads(r.text)["offline_url"]
+                        mapped_data = map_to_schema(Odkform, {"enketo_url": enketo_url})
+                        self.request.dbsession.query(Odkform).filter(
+                            Odkform.project_id == project_id
+                        ).filter(Odkform.form_id == form_id).update(mapped_data)
+                        return {"status": 200, "enketo_url": enketo_url, "message": ""}
+                    else:
+                        log.error(
+                            "ENKETO PLUGIN. Unable to activate offline survey with URL {}. Status code: {}".format(
+                                form_url, r.status_code
+                            )
+                        )
+                        return {
+                            "status": r.status_code,
+                            "enketo_url": "",
+                            "message": self._("Error configuring Enketo offline"),
+                        }
                 else:
                     log.error(
                         "ENKETO PLUGIN. Unable to activate survey with URL {}. Status code: {}".format(
@@ -59,7 +77,7 @@ class GenerateEnketoURLView(u.FormSharePrivateView):
                     }
             except Exception as e:
                 log.error(
-                    "ENKETO PLUGIN. Unable to activate survey with URL {}. Error: {}".format(
+                    "ENKETO PLUGIN Exception. Unable to activate survey with URL {}. Error: {}".format(
                         form_url, str(e)
                     )
                 )

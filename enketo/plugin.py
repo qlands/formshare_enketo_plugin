@@ -91,17 +91,32 @@ class enketo(plugins.SingletonPlugin):
             survey_data = json.loads(json.dumps(survey_data))
             enketo_survey_url = urljoin(request.registry.settings.get("enketo.url"), "api/v2/survey")
             try:
+                # Online Survey
                 r = requests.post(
                     enketo_survey_url,
                     data=survey_data,
                     auth=(request.registry.settings.get("enketo.apikey"), ""),
                 )
                 if r.status_code == 200 or r.status_code == 201:
-                    enketo_url = json.loads(r.text)["url"]
-                    mapped_data = map_to_schema(Odkform, {"enketo_url": enketo_url})
-                    request.dbsession.query(Odkform).filter(
-                        Odkform.project_id == project_id
-                    ).filter(Odkform.form_id == form_id).update(mapped_data)
+                    # OffLine survey
+                    enketo_survey_url = urljoin(request.registry.settings.get("enketo.url"), "api/v2/survey/offline")
+                    r = requests.post(
+                        enketo_survey_url,
+                        data=survey_data,
+                        auth=(request.registry.settings.get("enketo.apikey"), ""),
+                    )
+                    if r.status_code == 200 or r.status_code == 201:
+                        enketo_url = json.loads(r.text)["offline_url"]
+                        mapped_data = map_to_schema(Odkform, {"enketo_url": enketo_url})
+                        request.dbsession.query(Odkform).filter(
+                            Odkform.project_id == project_id
+                        ).filter(Odkform.form_id == form_id).update(mapped_data)
+                    else:
+                        log.error(
+                            "ENKETO PLUGIN. Unable to activate off-line survey with URL {}. Status code: {}".format(
+                                form_url, r.status_code
+                            )
+                        )
                 else:
                     log.error(
                         "ENKETO PLUGIN. Unable to activate survey with URL {}. Status code: {}".format(
@@ -110,7 +125,7 @@ class enketo(plugins.SingletonPlugin):
                     )
             except Exception as e:
                 log.error(
-                    "ENKETO PLUGIN. Unable to activate survey with URL {}. Error: {}".format(
+                    "ENKETO PLUGIN Exception. Unable to activate survey with URL {}. Error: {}".format(
                         form_url, str(e)
                     )
                 )
