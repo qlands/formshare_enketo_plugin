@@ -89,7 +89,9 @@ class enketo(plugins.SingletonPlugin):
 
             survey_data = {"server_url": form_url, "form_id": form_id}
             survey_data = json.loads(json.dumps(survey_data))
-            enketo_survey_url = urljoin(request.registry.settings.get("enketo.url"), "api/v2/survey")
+            enketo_survey_url = urljoin(
+                request.registry.settings.get("enketo.url"), "api/v2/survey"
+            )
             try:
                 # Online Survey
                 r = requests.post(
@@ -99,7 +101,10 @@ class enketo(plugins.SingletonPlugin):
                 )
                 if r.status_code == 200 or r.status_code == 201:
                     # OffLine survey
-                    enketo_survey_url = urljoin(request.registry.settings.get("enketo.url"), "api/v2/survey/offline")
+                    enketo_survey_url = urljoin(
+                        request.registry.settings.get("enketo.url"),
+                        "api/v2/survey/offline",
+                    )
                     r = requests.post(
                         enketo_survey_url,
                         data=survey_data,
@@ -152,7 +157,9 @@ class enketo(plugins.SingletonPlugin):
 
             survey_data = {"server_url": form_url, "form_id": form_id}
             survey_data = json.loads(json.dumps(survey_data))
-            enketo_survey_url = urljoin(request.registry.settings.get("enketo.url"), "api/v2/survey")
+            enketo_survey_url = urljoin(
+                request.registry.settings.get("enketo.url"), "api/v2/survey"
+            )
             try:
                 r = requests.delete(
                     enketo_survey_url,

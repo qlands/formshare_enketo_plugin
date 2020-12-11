@@ -32,7 +32,9 @@ class GenerateEnketoURLView(u.FormSharePrivateView):
 
             survey_data = {"server_url": form_url, "form_id": form_id}
             survey_data = json.loads(json.dumps(survey_data))
-            enketo_survey_url = urljoin(self.request.registry.settings.get("enketo.url"), "api/v2/survey")
+            enketo_survey_url = urljoin(
+                self.request.registry.settings.get("enketo.url"), "api/v2/survey"
+            )
             try:
                 r = requests.post(
                     enketo_survey_url,
@@ -40,7 +42,10 @@ class GenerateEnketoURLView(u.FormSharePrivateView):
                     auth=(self.request.registry.settings.get("enketo.apikey"), ""),
                 )
                 if r.status_code == 200 or r.status_code == 201:
-                    enketo_survey_url = urljoin(self.request.registry.settings.get("enketo.url"), "api/v2/survey/offline")
+                    enketo_survey_url = urljoin(
+                        self.request.registry.settings.get("enketo.url"),
+                        "api/v2/survey/offline",
+                    )
                     r = requests.post(
                         enketo_survey_url,
                         data=survey_data,
