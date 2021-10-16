@@ -1,7 +1,7 @@
 version: '3'
 services:
   fsenketo:
-    image: qlands/fsenketo:2.3.12
+    image: qlands/fsenketo:3.0.1
     container_name: fsenketo
     networks:
       fsenketo:

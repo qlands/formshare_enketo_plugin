@@ -6,6 +6,7 @@ if ! [ -f "${ENKETO_SRC_DIR}/config/config.json" ]; then
   cp ${ENKETO_SRC_DIR}/first_config/config.json ${ENKETO_SRC_DIR}/config/default-config.json
   cp ${ENKETO_SRC_DIR}/first_config/express.js ${ENKETO_SRC_DIR}/config/express.js
   cp ${ENKETO_SRC_DIR}/first_config/sample.env ${ENKETO_SRC_DIR}/config/sample.env
+  cp ${ENKETO_SRC_DIR}/first_config/build.js ${ENKETO_SRC_DIR}/config/build.js
 fi
 
 source /etc/profile
@@ -29,9 +30,9 @@ RUN_GRUNT=0
 sha1sum --status -c "${SHA1SUM_CONFIG_FILE_PATH}" || RUN_GRUNT=1
 
 # Compare commit version
-CURRENT_COMMIT=$(git rev-parse HEAD) # Get current commit
-LAST_BUILD_COMMIT=$(cat ${LAST_BUILD_COMMIT_FILE_PATH} || echo "-")
-RUN_GRUNT=$([[ "$RUN_GRUNT" == 0 && "$CURRENT_COMMIT" == "$LAST_BUILD_COMMIT" ]] && echo 0 || echo 1)
+#CURRENT_COMMIT=$(git rev-parse HEAD) # Get current commit
+#LAST_BUILD_COMMIT=$(cat ${LAST_BUILD_COMMIT_FILE_PATH} || echo "-")
+#RUN_GRUNT=$([[ "$RUN_GRUNT" == 0 && "$CURRENT_COMMIT" == "$LAST_BUILD_COMMIT" ]] && echo 0 || echo 1)
 
 # Ensure build files exist.
 # Can't test only on the parent folder because it's created by docker

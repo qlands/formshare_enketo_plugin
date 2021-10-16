@@ -1,0 +1,1 @@
+sudo docker build --no-cache --rm -t qlands/fsenketo:3.0.1 -f ./Dockerfile .
