@@ -1,4 +1,4 @@
-FROM qlands/enketo-express:3.0.1
+FROM qlands/enketo-express:3.0.5
 
 ENV ENKETO_SRC_DIR=/srv/src/enketo_express
 

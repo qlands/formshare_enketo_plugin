@@ -8,7 +8,7 @@ with open(os.path.join(here, "README.md")) as f:
 with open(os.path.join(here, "CHANGES.txt")) as f:
     CHANGES = f.read()
 
-requires = ["formshare"]
+requires = ["formshare >= 2.18.0"]
 
 tests_require = ["WebTest >= 1.3.1", "pytest", "pytest-cov"]  # py3 compat
 
