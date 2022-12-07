@@ -148,7 +148,7 @@ class enketo(plugins.SingletonPlugin):
     def before_deleting_form(self, request, form_type, user_id, project_id, form_id):
         return True, ""
 
-    def after_deleting_form(self, request, form_type, user_id, project_id, form_id):
+    def after_deleting_form(self, request, form_type, user_id, project_id, form_id, form_data):
         if form_type == "ODK":
             project_code = get_project_code_from_id(request, user_id, project_id)
             form_url = request.route_url(
