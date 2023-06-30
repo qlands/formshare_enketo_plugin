@@ -22,8 +22,8 @@ cd /opt/enketo
 # Grab the plug-in source
 git clone https://github.com/qlands/formshare_enketo_plugin.git
 # Create a directory for the Docker Compose file
-mkdir enketo_2.3.12
-cd enketo_2.3.12
+mkdir enketo_6.1.0
+cd enketo_6.1.0
 # Copy the Docker compose file from the source to the new directory
 cp ../formshare_enketo_plugin/docker_compose/docker-compose.yml .
 # Start the Enketo server
