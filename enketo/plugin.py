@@ -19,6 +19,7 @@ class enketo(plugins.SingletonPlugin):
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.ISchema)
     plugins.implements(plugins.IForm)
+    plugins.implements(plugins.IDatabase)
 
     # Implement IRoutes functions
     def before_mapping(self, config):
@@ -50,6 +51,16 @@ class enketo(plugins.SingletonPlugin):
 
     def get_translation_domain(self):
         return "enketo"
+
+    # IDatabase
+    def update_orm(self, config):
+        config.include("enketo.orm")
+
+    def update_extendable_tables(self, tables_allowed):
+        return tables_allowed
+
+    def update_extendable_modules(self, modules_allowed):
+        return modules_allowed
 
     # Implements ISchema. This will include a field called Enketo_url as part of a form DB schema
     def update_schema(self, config):
@@ -148,7 +159,9 @@ class enketo(plugins.SingletonPlugin):
     def before_deleting_form(self, request, form_type, user_id, project_id, form_id):
         return True, ""
 
-    def after_deleting_form(self, request, form_type, user_id, project_id, form_id, form_data):
+    def after_deleting_form(
+        self, request, form_type, user_id, project_id, form_id, form_data
+    ):
         if form_type == "ODK":
             project_code = get_project_code_from_id(request, user_id, project_id)
             form_url = request.route_url(

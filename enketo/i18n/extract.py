@@ -30,7 +30,6 @@ def jinja2_cleaner(fileobj, *args, **kw):
     raw_extract = extract_jinja2(fileobj, *args, **kw)
 
     for lineno, func, message, finder in raw_extract:
-
         if isinstance(message, str):
             message = je.regularise_html(message)
         elif message is not None:
@@ -40,7 +39,6 @@ def jinja2_cleaner(fileobj, *args, **kw):
 
 
 def extract_formshare(fileobj, *args, **kw):
-
     # This custom extractor is to support customs tags in the jinja2 extractions. Otherwise the normal extract fail
 
     # This code is based on CKAN

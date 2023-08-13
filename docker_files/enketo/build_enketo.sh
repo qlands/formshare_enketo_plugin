@@ -1,1 +1,1 @@
-sudo docker build --no-cache --rm -t qlands/fsenketo:6.1.0 -f ./Dockerfile .
+sudo docker build --no-cache --rm -t qlands/fsenketo:6.0.0 -f ./Dockerfile .
