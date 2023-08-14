@@ -1,7 +1,7 @@
 import formshare.plugins.utilities as u
 from pyramid.httpexceptions import HTTPNotFound
 import json
-from formshare.models import Odkform, map_to_schema
+from enketo.orm.processes import add_enketo_details
 from formshare.processes.db.project import get_project_id_from_name
 import requests
 import logging
@@ -16,7 +16,7 @@ class GenerateEnketoURLView(u.FormSharePrivateView):
         self.checkCrossPost = False
 
     def process_view(self):
-        if self.request.method == "GET":
+        if self.request.method == "POST":
             self.returnRawViewResult = True
             if self.get_project_access_level() >= 4:
                 raise HTTPNotFound
@@ -30,66 +30,74 @@ class GenerateEnketoURLView(u.FormSharePrivateView):
                 "project_details", userid=user_id, projcode=project_code
             )
 
-            survey_data = {"server_url": form_url, "form_id": form_id}
-            survey_data = json.loads(json.dumps(survey_data))
-            enketo_survey_url = urljoin(
-                self.request.registry.settings.get("enketo.url"), "api/v2/survey"
-            )
-            try:
-                r = requests.post(
-                    enketo_survey_url,
-                    data=survey_data,
-                    auth=(self.request.registry.settings.get("enketo.apikey"), ""),
+            enketo_urls = [
+                {"url": "api/v2/survey", "result": None, "result_key": "url"},
+                {
+                    "url": "api/v2/survey/offline",
+                    "result": None,
+                    "result_key": "offline_url",
+                },
+                {
+                    "url": "api/v2/survey/single",
+                    "result": None,
+                    "result_key": "single_url",
+                },
+                {
+                    "url": "api/v2/survey/single/once",
+                    "result": None,
+                    "result_key": "single_once_url",
+                },
+                {
+                    "url": "api/v2/survey/preview",
+                    "result": None,
+                    "result_key": "preview_url",
+                },
+            ]
+
+            for an_url in enketo_urls:
+                survey_data = {
+                    "server_url": form_url,
+                    "form_id": form_id,
+                    "return_url": "",
+                }
+                survey_data = json.loads(json.dumps(survey_data))
+                enketo_survey_url = urljoin(
+                    self.request.registry.settings.get("enketo.url"), an_url["url"]
                 )
-                if r.status_code == 200 or r.status_code == 201:
-                    enketo_survey_url = urljoin(
-                        self.request.registry.settings.get("enketo.url"),
-                        "api/v2/survey/offline",
-                    )
+                try:
+                    # Online Survey
                     r = requests.post(
                         enketo_survey_url,
                         data=survey_data,
                         auth=(self.request.registry.settings.get("enketo.apikey"), ""),
                     )
                     if r.status_code == 200 or r.status_code == 201:
-                        enketo_url = json.loads(r.text)["offline_url"]
-                        mapped_data = map_to_schema(Odkform, {"enketo_url": enketo_url})
-                        self.request.dbsession.query(Odkform).filter(
-                            Odkform.project_id == project_id
-                        ).filter(Odkform.form_id == form_id).update(mapped_data)
-                        return {"status": 200, "enketo_url": enketo_url, "message": ""}
+                        an_url["result"] = json.loads(r.text)[an_url["result_key"]]
                     else:
                         log.error(
-                            "ENKETO PLUGIN. Unable to activate offline survey with URL {}. Status code: {}".format(
-                                form_url, r.status_code
+                            "ENKETO PLUGIN. Unable to activate off-line survey with URL {}. Status code: {}".format(
+                                an_url["url"], r.status_code
                             )
                         )
-                        return {
-                            "status": r.status_code,
-                            "enketo_url": "",
-                            "message": self._("Error configuring Enketo offline"),
-                        }
-                else:
+                except Exception as e:
                     log.error(
-                        "ENKETO PLUGIN. Unable to activate survey with URL {}. Status code: {}".format(
-                            form_url, r.status_code
+                        "ENKETO PLUGIN Exception. Unable to activate survey with URL {}. Error: {}".format(
+                            an_url["url"], str(e)
                         )
                     )
-                    return {
-                        "status": r.status_code,
-                        "enketo_url": "",
-                        "message": self._("Error configuring Enketo "),
-                    }
-            except Exception as e:
-                log.error(
-                    "ENKETO PLUGIN Exception. Unable to activate survey with URL {}. Error: {}".format(
-                        form_url, str(e)
-                    )
-                )
-                return {
-                    "status": 500,
-                    "enketo_url": "",
-                    "message": self._("Error accessing Enketo server"),
-                }
+            enketo_metadata = {"project_id": project_id, "form_id": form_id}
+            if enketo_urls[0]["result"] is not None:
+                enketo_metadata["url_multi"] = enketo_urls[0]["result"]
+            if enketo_urls[1]["result"] is not None:
+                enketo_metadata["url_off_multi"] = enketo_urls[1]["result"]
+            if enketo_urls[2]["result"] is not None:
+                enketo_metadata["url_single"] = enketo_urls[2]["result"]
+            if enketo_urls[3]["result"] is not None:
+                enketo_metadata["url_once"] = enketo_urls[3]["result"]
+            if enketo_urls[4]["result"] is not None:
+                enketo_metadata["url_testing"] = enketo_urls[4]["result"]
+
+            add_enketo_details(self.request, enketo_metadata)
+
         else:
             raise HTTPNotFound

@@ -4,23 +4,22 @@
     {{ super() }}
         {% if projectDetails.access_type < 4 %}
             <script>
-                function get_enketo_configuration()
-                {
-                    $.getJSON("{{ request.route_url('enketo_get_url',userid=projectDetails.owner, projcode=projectDetails.project_code, formid=formDetails.form_id) }}", function( data ) {
-                        if (data.status === 200 )
-                        {
-                            $('#enketo_url').val(data.enketo_url);
-                            $('#enketo_url_copy').attr("data-clipboard-text",data.enketo_url);
-                            $('#enketo_url_play').attr("href",data.enketo_url);
-                            $('#enketo_url_play').attr('disabled',false);
-                            $('#enketo_url_play').attr('target',"_blank");
-                        }
-                        else
-                        {
-                            swal ( "Enketo" ,  data.message ,  "error" )
-                        }
-                    });
-                }
+                $( "#generate_enketo_urls" ).on( "click", function() {
+                    var form = document.createElement('form');
+                    form.setAttribute('method', 'post');
+                    form.setAttribute('action', "{{ request.route_url('enketo_get_url',userid=projectDetails.owner, projcode=projectDetails.project_code, formid=formDetails.form_id) }}");
+                    form.style.display = 'hidden';
+
+                    var i = document.createElement("input"); //input element, text
+                    i.setAttribute('type',"text");
+                    i.setAttribute('name',"csrf_token");
+                    i.setAttribute('value','{{ request.session.get_csrf_token() }}');
+                    form.appendChild(i);
+
+                    document.body.appendChild(form);
+                    $("#busy").show();
+                    form.submit();
+                } );
             </script>
         {% endif %}
 {% endblock scripts %}
