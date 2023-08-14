@@ -1,6 +1,6 @@
 import formshare.plugins as plugins
 import formshare.plugins.utilities as u
-from .views import GenerateEnketoURLView
+from .views import GenerateEnketoURLView, EditThanksPageView, DisplayThanksPageView
 import sys
 import os
 from formshare.processes.db.project import get_project_code_from_id
@@ -13,7 +13,7 @@ from urllib.parse import urljoin
 log = logging.getLogger("formshare")
 
 
-class enketo(plugins.SingletonPlugin):
+class Enketo(plugins.SingletonPlugin):
     plugins.implements(plugins.IRoutes)
     plugins.implements(plugins.IConfig)
     plugins.implements(plugins.ITranslation)
@@ -31,10 +31,22 @@ class enketo(plugins.SingletonPlugin):
         # We add here a new route /json that returns a JSON
         custom_map = [
             u.add_route(
-                "enketo_get_url",
-                "/user/{userid}/project/{projcode}/form/{formid}/plugins/enketo/start",
+                "enketo_generate_urls",
+                "/user/{userid}/project/{projcode}/form/{formid}/plugins/enketo/generate",
                 GenerateEnketoURLView,
-                "json",
+                None,
+            ),
+            u.add_route(
+                "enketo_edit_thanks_page",
+                "/user/{userid}/project/{projcode}/form/{formid}/plugins/enketo/edit_thanks",
+                EditThanksPageView,
+                "templates/enketo/edit_thanks.jinja2",
+            ),
+            u.add_route(
+                "enketo_display_thanks_page",
+                "/user/{userid}/project/{projcode}/form/{formid}/plugins/enketo/thank_you",
+                DisplayThanksPageView,
+                "templates/enketo/display_thanks.jinja2",
             ),
         ]
 

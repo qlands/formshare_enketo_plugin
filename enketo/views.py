@@ -1,8 +1,12 @@
 import formshare.plugins.utilities as u
-from pyramid.httpexceptions import HTTPNotFound
+from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 import json
 from enketo.orm.processes import add_enketo_details
-from formshare.processes.db.project import get_project_id_from_name
+from formshare.processes.db.project import (
+    get_project_id_from_name,
+    get_project_details,
+    get_form_data,
+)
 import requests
 import logging
 from urllib.parse import urljoin
@@ -99,5 +103,40 @@ class GenerateEnketoURLView(u.FormSharePrivateView):
 
             add_enketo_details(self.request, enketo_metadata)
 
+            next_page = self.request.params.get("next") or self.request.route_url(
+                "form_details", userid=user_id, projcode=project_code, formid=form_id
+            )
+            self.request.session.flash(
+                self._("The data collection URLs were generated")
+            )
+            return HTTPFound(next_page)
+
         else:
             raise HTTPNotFound
+
+
+class EditThanksPageView(u.FormSharePrivateView):
+    def process_view(self):
+        user_id = self.request.matchdict["userid"]
+        project_code = self.request.matchdict["projcode"]
+        form_id = self.request.matchdict["formid"]
+        project_id = get_project_id_from_name(self.request, user_id, project_code)
+
+        if project_id is not None:
+            access_type = self.get_project_access_level()
+            if access_type > 4:
+                raise HTTPNotFound
+            project_details = get_project_details(self.request, project_id)
+            project_details["access_type"] = access_type
+        else:
+            raise HTTPNotFound
+
+        form_data = get_form_data(self.request, project_id, form_id)
+        if form_data is not None:
+            raise HTTPNotFound
+        return {"projectDetails": project_details, "formDetails": form_data}
+
+
+class DisplayThanksPageView(u.FormSharePublicView):
+    def process_view(self):
+        return {}

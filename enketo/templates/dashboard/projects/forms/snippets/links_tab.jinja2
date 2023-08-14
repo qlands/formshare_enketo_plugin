@@ -14,8 +14,9 @@
             </span>
         </div>
     {% else %}
+        {{ _('Browser data collection') }}:<br/>
         <div class="input-group">
-            <select id="enketo_url" readonly class="form-control">
+            <select id="enketo_urls" readonly class="form-control">
                 <option value="{{ formDetails.enketo.url_multi }}">{{ _('Online-Only (multiple submissions)') }}</option>
                 <option value="{{ formDetails.enketo.url_off_multi }}">{{ _('Online-Offline (multiple submission)') }}</option>
                 <option value="{{ formDetails.enketo.url_single }}">{{ _('Online-Only (single submission)') }}</option>
@@ -24,14 +25,14 @@
             </select>
             <span class="input-group-append">
                 {% if formDetails.enketo_url  %}
-                    <a id="enketo_url_copy" class="btn btn-white btn-bitbucket clipboard" data-clipboard-text="{{ formDetails.enketo_url }}" title="{{ _('Copy to clipboard') }}"><i class="far fa-copy"></i></a>
+                    <a id="enketo_url_copy" class="btn btn-white btn-bitbucket clipboard" data-clipboard-text="{{ formDetails.enketo.url_multi }}" title="{{ _('Copy to clipboard') }}"><i class="far fa-copy"></i></a>
                 {% endif %}
                 {% if projectDetails.access_type < 4 %}
                     <a id="generate_enketo_urls" class="btn btn-white btn-bitbucket"  title="{{ _('Generate URL') }}"><i class="fas fa-sync-alt"></i></a>
                 {% endif %}
 
-                <a id="enketo_url_play" class="btn btn-white btn-bitbucket" target="_blank" href="{{ formDetails.enketo_url }}" title="{{ _('Collect data using Enketo') }}"><i class="fas fa-play"></i></a>
-                <a class="btn btn-white btn-bitbucket" href="#" title="{{ _('Edit thank you page') }}"><i class="fas fa-thumbs-up"></i></a>
+                <a id="enketo_url_play" class="btn btn-white btn-bitbucket" target="_blank" href="{{ formDetails.enketo.url_multi }}" title="{{ _('Collect data using the browser') }}"><i class="fas fa-play"></i></a>
+                <a class="btn btn-white btn-bitbucket" href="{{ request.route_url('enketo_edit_thanks_page',userid=projectDetails.owner, projcode=projectDetails.project_code, formid=formDetails.form_id) }}" title="{{ _('Edit thank you page') }}"><i class="fas fa-thumbs-up"></i></a>
 
             </span>
         </div>

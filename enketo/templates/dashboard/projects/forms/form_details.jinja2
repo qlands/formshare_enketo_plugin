@@ -2,24 +2,30 @@
 
 {% block scripts %}
     {{ super() }}
-        {% if projectDetails.access_type < 4 %}
-            <script>
-                $( "#generate_enketo_urls" ).on( "click", function() {
-                    var form = document.createElement('form');
-                    form.setAttribute('method', 'post');
-                    form.setAttribute('action', "{{ request.route_url('enketo_get_url',userid=projectDetails.owner, projcode=projectDetails.project_code, formid=formDetails.form_id) }}");
-                    form.style.display = 'hidden';
+    {% if projectDetails.access_type < 4 %}
+        <script>
+            $( "#generate_enketo_urls" ).on( "click", function() {
+                var form = document.createElement('form');
+                form.setAttribute('method', 'post');
+                form.setAttribute('action', "{{ request.route_url('enketo_generate_urls',userid=projectDetails.owner, projcode=projectDetails.project_code, formid=formDetails.form_id) }}");
+                form.style.display = 'hidden';
 
-                    var i = document.createElement("input"); //input element, text
-                    i.setAttribute('type',"text");
-                    i.setAttribute('name',"csrf_token");
-                    i.setAttribute('value','{{ request.session.get_csrf_token() }}');
-                    form.appendChild(i);
+                var i = document.createElement("input"); //input element, text
+                i.setAttribute('type',"text");
+                i.setAttribute('name',"csrf_token");
+                i.setAttribute('value','{{ request.session.get_csrf_token() }}');
+                form.appendChild(i);
 
-                    document.body.appendChild(form);
-                    $("#busy").show();
-                    form.submit();
-                } );
-            </script>
-        {% endif %}
+                document.body.appendChild(form);
+                $("#busy").show();
+                form.submit();
+            } );
+        </script>
+    {% endif %}
+    <script>
+        $('#enketo_urls').on('change', function() {
+            $('#enketo_url_copy').data('clipboard-text', this.value);
+            $('#enketo_url_play').attr("href", this.value);
+        });
+    </script>
 {% endblock scripts %}
