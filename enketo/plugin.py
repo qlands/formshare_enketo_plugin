@@ -1,6 +1,12 @@
 import formshare.plugins as plugins
 import formshare.plugins.utilities as u
-from .views import GenerateEnketoURLView, EditThanksPageView, DisplayThanksPageView
+from .views import (
+    GenerateEnketoURLView,
+    EditThanksPageView,
+    DisplayThanksPageView,
+    PageUploadImageView,
+    PageGetImageView,
+)
 import sys
 import os
 from formshare.processes.db.project import get_project_code_from_id
@@ -48,6 +54,18 @@ class Enketo(plugins.SingletonPlugin):
                 DisplayThanksPageView,
                 "templates/enketo/display_thanks.jinja2",
             ),
+            u.add_route(
+                "enketo_upload_image",
+                "/user/{userid}/project/{projcode}/form/{formid}/plugins/enketo/upload_image",
+                PageUploadImageView,
+                "json",
+            ),
+            u.add_route(
+                "enketo_download_image",
+                "/user/{userid}/project/{projcode}/form/{formid}/plugins/enketo/image/{imageid}",
+                PageGetImageView,
+                None,
+            ),
         ]
 
         return custom_map
@@ -56,6 +74,7 @@ class Enketo(plugins.SingletonPlugin):
     def update_config(self, config):
         # We add here the templates of the plugin to the config
         u.add_templates_directory(config, "templates")
+        u.add_static_view(config, "enketo_static", "static")
 
     # Implement ITranslation functions
     def get_translation_directory(self):

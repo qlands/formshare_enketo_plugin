@@ -33,7 +33,19 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-
+                    {{ form.display_errors(errors) }}
+                    <form role="form" method="post" action="{{ request.url }}">
+                        {{ form.secure_form(request) }}
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{{ _('Content') }}</label>
+                                <textarea id="editor" class="form-control editor" name="page_content">{{ page_content }}</textarea>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">{{ _('Save changes') }}</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -42,8 +54,12 @@
 
 {% block scripts %}
     {{ super() }}
+    <script src="{{ request.url_for_static('ckeditor/ckeditor.js','enketo_static') }}"> </script>
     <script>
-
+        CKEDITOR.replace( 'editor', {
+            height: 300,
+            filebrowserUploadUrl: '{{ request.route_url("enketo_upload_image", userid=activeUser.login, projcode=projectDetails.project_code, formid=formDetails.form_id, _query={'command':'QuickUpload'})}}'
+        });
     </script>
 
 

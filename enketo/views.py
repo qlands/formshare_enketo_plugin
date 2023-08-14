@@ -1,6 +1,10 @@
 import formshare.plugins.utilities as u
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 import json
+import uuid
+import os
+import shutil
+import mimetypes
 from enketo.orm.processes import add_enketo_details
 from formshare.processes.db.project import (
     get_project_id_from_name,
@@ -10,6 +14,7 @@ from formshare.processes.db.project import (
 import requests
 import logging
 from urllib.parse import urljoin
+from pyramid.response import FileResponse
 
 log = logging.getLogger("formshare")
 
@@ -29,6 +34,10 @@ class GenerateEnketoURLView(u.FormSharePrivateView):
             project_code = self.request.matchdict.get("projcode", None)
             form_id = self.request.matchdict.get("formid", None)
             project_id = get_project_id_from_name(self.request, user_id, project_code)
+
+            form_data = get_form_data(self.request, project_id, form_id)
+            if form_data is None:
+                raise HTTPNotFound
 
             form_url = self.request.route_url(
                 "project_details", userid=user_id, projcode=project_code
@@ -124,7 +133,7 @@ class EditThanksPageView(u.FormSharePrivateView):
 
         if project_id is not None:
             access_type = self.get_project_access_level()
-            if access_type > 4:
+            if access_type >= 4:
                 raise HTTPNotFound
             project_details = get_project_details(self.request, project_id)
             project_details["access_type"] = access_type
@@ -132,9 +141,97 @@ class EditThanksPageView(u.FormSharePrivateView):
             raise HTTPNotFound
 
         form_data = get_form_data(self.request, project_id, form_id)
-        if form_data is not None:
+        if form_data is None:
             raise HTTPNotFound
-        return {"projectDetails": project_details, "formDetails": form_data}
+        page_content = ""
+        return {
+            "projectDetails": project_details,
+            "formDetails": form_data,
+            "page_content": page_content,
+        }
+
+
+class PageUploadImageView(u.FormSharePrivateView):
+    def __init__(self, request):
+        u.FormSharePrivateView.__init__(self, request)
+        self.checkCrossPost = False
+        self.checkCRF = False
+
+    def process_view(self):
+        if self.request.method == "POST":
+            user_id = self.request.matchdict["userid"]
+            project_code = self.request.matchdict["projcode"]
+            form_id = self.request.matchdict["formid"]
+            project_id = get_project_id_from_name(self.request, user_id, project_code)
+
+            if project_id is not None:
+                access_type = self.get_project_access_level()
+                if access_type >= 4:
+                    raise HTTPNotFound
+                project_details = get_project_details(self.request, project_id)
+                project_details["access_type"] = access_type
+            else:
+                raise HTTPNotFound
+
+            form_data = get_form_data(self.request, project_id, form_id)
+            if form_data is None:
+                raise HTTPNotFound
+
+            uid = str(uuid.uuid4())
+            input_file = self.request.POST["upload"].file
+            input_file_name = self.request.POST["upload"].filename.lower()
+            name, extension = os.path.splitext(input_file_name)
+            repository_path = form_data["form_directory"]
+
+            paths = [repository_path, "enketo_upload"]
+            upload_path = os.path.join(repository_path, *paths)
+            if not os.path.exists(upload_path):
+                os.makedirs(upload_path)
+
+            paths = [repository_path, "enketo_upload", uid + extension]
+            target_file = os.path.join(repository_path, *paths)
+            input_file.seek(0)
+            with open(target_file, "wb") as permanent_file:
+                shutil.copyfileobj(input_file, permanent_file)
+            return {
+                "uploaded": 1,
+                "url": self.request.route_url(
+                    "enketo_download_image",
+                    userid=user_id,
+                    projcode=project_code,
+                    formid=form_id,
+                    imageid=uid + extension,
+                ),
+            }
+        else:
+            raise HTTPNotFound
+
+
+class PageGetImageView(u.FormSharePublicView):
+    def process_view(self):
+        user_id = self.request.matchdict["userid"]
+        project_code = self.request.matchdict["projcode"]
+        form_id = self.request.matchdict["formid"]
+        project_id = get_project_id_from_name(self.request, user_id, project_code)
+
+        if project_id is None:
+            raise HTTPNotFound
+
+        form_data = get_form_data(self.request, project_id, form_id)
+        if form_data is None:
+            raise HTTPNotFound
+
+        image_id = self.request.matchdict["imageid"]
+        repository_path = form_data["form_directory"]
+        paths = [repository_path, "enketo_upload", image_id]
+
+        file_path = os.path.join(repository_path, *paths)
+        content_type, content_enc = mimetypes.guess_type(file_path)
+        response = FileResponse(
+            file_path, request=self.request, content_type=content_type
+        )
+        self.returnRawViewResult = True
+        return response
 
 
 class DisplayThanksPageView(u.FormSharePublicView):
