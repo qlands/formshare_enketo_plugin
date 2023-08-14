@@ -71,7 +71,12 @@ class GenerateEnketoURLView(u.FormSharePrivateView):
                 survey_data = {
                     "server_url": form_url,
                     "form_id": form_id,
-                    "return_url": "",
+                    "return_url": self.request.route_url(
+                        "enketo_display_thanks_page",
+                        userid=user_id,
+                        projcode=project_code,
+                        formid=form_id,
+                    ),
                 }
                 survey_data = json.loads(json.dumps(survey_data))
                 enketo_survey_url = urljoin(
