@@ -1,81 +1,142 @@
-# Portuguese translations for enketo.
-# Copyright (C) 2020 ORGANIZATION
-# This file is distributed under the same license as the enketo project.
-#
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
-# Carlos Quiros <cquiros@qlands.com>, 2020.
 msgid ""
 msgstr ""
-"Project-Id-Version: enketo 1.0\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-07-24 13:00-0400\n"
-"PO-Revision-Date: 2020-08-19 10:22-0600\n"
-"Last-Translator: Carlos Quiros <cquiros@qlands.com>\n"
-"Language: pt\n"
-"Language-Team: English <kde-i18n-doc@kde.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.3\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: Enketo_plugin\n"
+"Language: pt-br\n"
 
-#: enketo/views.py:70
-#, fuzzy
-#| msgid "Error configuring Enketo "
-msgid "Error configuring Enketo offline"
-msgstr "Erro ao configurar o Enketo"
-
-#: enketo/views.py:81
-msgid "Error configuring Enketo "
-msgstr "Erro ao configurar o Enketo"
-
-#: enketo/views.py:92
-msgid "Error accessing Enketo server"
-msgstr "Erro de conexão com o servidor Enketo"
-
-#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:11
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:27
 msgid "Copy to clipboard"
 msgstr "Cópia para prancheta"
 
-#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:14
-msgid "Generate URL"
-msgstr "Gerar a URL"
+#: enketo/views.py:134
+msgid "The data collection URLs were generated"
+msgstr "Foram gerados URLs para coletar dados"
+
+#: enketo/views.py:224 enketo/views.py:346
+msgid "Thank you for your response"
+msgstr "Obrigado por sua resposta"
+
+#: enketo/orm/processes.py:43 enketo/orm/processes.py:147
+msgid "The form already exists"
+msgstr "O formulário já existe"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:9
+msgid "Generate the URLS"
+msgstr "Gerar URLs"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:12
+msgid "Generate URLs"
+msgstr "Gerar URLs"
 
 #: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:17
-#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:19
-msgid "Collect data using Enketo"
-msgstr "Coleta de dados usando o Enketo"
+msgid "Web browser data collection"
+msgstr "Coletar dados usando o navegador da Web"
 
-#~ msgid "Enketo hasn't been configured yet"
-#~ msgstr "Enketo não foi ainda configurado"
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:20
+msgid "Online-Only (multiple submissions)"
+msgstr "Somente on-line (várias remessas)"
 
-#~ msgid "Close"
-#~ msgstr "Fechar"
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:21
+msgid "Online-Offline (multiple submission)"
+msgstr "On-line e off-line (várias remessas)"
 
-#~ msgid "Configure Enketo"
-#~ msgstr "configure Poll"
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:22
+msgid "Online-Only (single submission)"
+msgstr "Somente on-line (remessa única)"
 
-#~ msgid ""
-#~ "Enketo is an open source technology "
-#~ "for collecting ODK data using Internet"
-#~ " browsers"
-#~ msgstr ""
-#~ "Enketo é uma tecnologia de código "
-#~ "aberto para coleta de dados ODK "
-#~ "usando navegadores da Internet"
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:23
+msgid "Online-only (once per respondent)"
+msgstr "Somente on-line (um envio por respondente)"
 
-#~ msgid "To configure Enketo please provide the URL address and access key."
-#~ msgstr ""
-#~ "Para configurar Enketo por favor "
-#~ "fornecer o endereço URL e chave de"
-#~ " acesso."
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:24
+msgid "View only (for testing)"
+msgstr "Somente visualização (para teste)"
 
-#~ msgid "Enter here the URL of Enketo"
-#~ msgstr "Digite aqui o URL de Enketo"
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:28
+msgid "Collect data using the browser"
+msgstr "Coletar dados por meio do navegador"
 
-#~ msgid "Enter here your Enketo access key"
-#~ msgstr "Digite aqui sua chave de acesso Enketo"
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:35
+msgid "Re-generate URLs"
+msgstr "Gerar URLs novamente"
 
-#~ msgid "Save settings"
-#~ msgstr "Salvar configurações"
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:36
+#: enketo/templates/enketo/edit_thanks.jinja2:4
+#: enketo/templates/enketo/snippets/brdcrbs_edit_thanks.jinja2:2
+msgid "Edit thank you page"
+msgstr "Editar a página de agradecimento"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:25
+msgid "Editor"
+msgstr "Editora"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:40
+#: enketo/templates/enketo/snippets/header.jinja2:24
+msgid "Language:"
+msgstr "Idioma:"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:43
+#: enketo/templates/enketo/edit_thanks.jinja2:48
+#: enketo/templates/enketo/snippets/header.jinja2:27
+#: enketo/templates/enketo/snippets/header.jinja2:32
+msgid "Default"
+msgstr "Padrão"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:57
+msgid "Preview"
+msgstr "Prévia"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:68
+msgid "Save changes"
+msgstr "Salvando alterações"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:69
+msgid "Cancel changes"
+msgstr "Cancelar alterações"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:71
+msgid "Delete language"
+msgstr "Excluir idioma"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:73
+#: enketo/templates/enketo/edit_thanks.jinja2:90
+#: enketo/templates/enketo/edit_thanks.jinja2:106
+msgid "Translate"
+msgstr "Traduzir"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:88
+#: enketo/templates/enketo/edit_thanks.jinja2:105
+msgid "Close"
+msgstr "Fechar"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:96
+msgid "Language code"
+msgstr "Código do idioma"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:100
+msgid "Language name"
+msgstr "Nome do idioma"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:148
+msgid "Are you sure?"
+msgstr "Tem certeza?"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:152
+msgid "Yes, delete it!"
+msgstr "Sim, exclua-o!"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:153
+msgid "Oops, cancel!"
+msgstr "Opps, cancelar!"
+
+#: enketo/templates/enketo/snippets/brdcrbs_edit_thanks.jinja2:5
+msgid "Dashboard"
+msgstr "Painel"
+
+#: enketo/templates/enketo/snippets/brdcrbs_edit_thanks.jinja2:8
+msgid "Projects"
+msgstr "Projetos"
 

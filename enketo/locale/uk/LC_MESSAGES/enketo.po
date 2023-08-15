@@ -7,28 +7,136 @@ msgstr ""
 "Project-Id-Version: Enketo_plugin\n"
 "Language: uk\n"
 
-#: enketo/views.py:70
-msgid "Error configuring Enketo offline"
-msgstr "Помилка налаштування Enketo в автономному режимі"
-
-#: enketo/views.py:81
-msgid "Error configuring Enketo "
-msgstr "Помилка під час налаштування Enketo "
-
-#: enketo/views.py:92
-msgid "Error accessing Enketo server"
-msgstr "Помилка доступу до сервера Enketo"
-
-#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:11
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:27
 msgid "Copy to clipboard"
 msgstr "Скопіювати в буфер обміну"
 
-#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:14
-msgid "Generate URL"
-msgstr "Згенерувати URL-адресу"
+#: enketo/views.py:134
+msgid "The data collection URLs were generated"
+msgstr "Згенеровано URL-адреси для збору даних"
+
+#: enketo/views.py:224 enketo/views.py:346
+msgid "Thank you for your response"
+msgstr "Дякуємо за вашу відповідь"
+
+#: enketo/orm/processes.py:43 enketo/orm/processes.py:147
+msgid "The form already exists"
+msgstr "Форма вже існує"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:9
+msgid "Generate the URLS"
+msgstr "Згенеруйте URL-адреси"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:12
+msgid "Generate URLs"
+msgstr "Генерувати URL-адреси"
 
 #: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:17
-#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:19
-msgid "Collect data using Enketo"
-msgstr "Збирайте дані за допомогою Enketo"
+msgid "Web browser data collection"
+msgstr "Збір даних веб-браузера"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:20
+msgid "Online-Only (multiple submissions)"
+msgstr "Тільки онлайн (кілька заявок)"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:21
+msgid "Online-Offline (multiple submission)"
+msgstr "Онлайн-Офлайн (багаторазове подання)"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:22
+msgid "Online-Only (single submission)"
+msgstr "Тільки онлайн (одноразова подача)"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:23
+msgid "Online-only (once per respondent)"
+msgstr "Тільки онлайн (один раз на респондента)"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:24
+msgid "View only (for testing)"
+msgstr "Тільки перегляд (для тестування)"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:28
+msgid "Collect data using the browser"
+msgstr "Збір даних за допомогою браузера"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:35
+msgid "Re-generate URLs"
+msgstr "Перегенеруйте URL-адреси"
+
+#: enketo/templates/dashboard/projects/forms/snippets/links_tab.jinja2:36
+#: enketo/templates/enketo/edit_thanks.jinja2:4
+#: enketo/templates/enketo/snippets/brdcrbs_edit_thanks.jinja2:2
+msgid "Edit thank you page"
+msgstr "Редагувати сторінку подяки"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:25
+msgid "Editor"
+msgstr "Редактор"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:40
+#: enketo/templates/enketo/snippets/header.jinja2:24
+msgid "Language:"
+msgstr "Мова:"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:43
+#: enketo/templates/enketo/edit_thanks.jinja2:48
+#: enketo/templates/enketo/snippets/header.jinja2:27
+#: enketo/templates/enketo/snippets/header.jinja2:32
+msgid "Default"
+msgstr "За замовчуванням"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:57
+msgid "Preview"
+msgstr "Попередній перегляд"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:68
+msgid "Save changes"
+msgstr "Зберегти зміни"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:69
+msgid "Cancel changes"
+msgstr "Скасувати зміни"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:71
+msgid "Delete language"
+msgstr "Видалити мову"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:73
+#: enketo/templates/enketo/edit_thanks.jinja2:90
+#: enketo/templates/enketo/edit_thanks.jinja2:106
+msgid "Translate"
+msgstr "Перекласти"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:88
+#: enketo/templates/enketo/edit_thanks.jinja2:105
+msgid "Close"
+msgstr "Закрити"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:96
+msgid "Language code"
+msgstr "Код мови"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:100
+msgid "Language name"
+msgstr "Назва мови"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:148
+msgid "Are you sure?"
+msgstr "Ти впевнений?"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:152
+msgid "Yes, delete it!"
+msgstr "Так, видаліть його!"
+
+#: enketo/templates/enketo/edit_thanks.jinja2:153
+msgid "Oops, cancel!"
+msgstr "Ой, скасуй!"
+
+#: enketo/templates/enketo/snippets/brdcrbs_edit_thanks.jinja2:5
+msgid "Dashboard"
+msgstr "Приладова панель"
+
+#: enketo/templates/enketo/snippets/brdcrbs_edit_thanks.jinja2:8
+msgid "Projects"
+msgstr "Проекти"
 
