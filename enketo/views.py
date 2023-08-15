@@ -103,8 +103,8 @@ class GenerateEnketoURLView(u.FormSharePrivateView):
                         an_url["result"] = json.loads(r.text)[an_url["result_key"]]
                     else:
                         log.error(
-                            "ENKETO PLUGIN. Unable to activate off-line survey with URL {}. Status code: {}".format(
-                                an_url["url"], r.status_code
+                            "ENKETO PLUGIN. Unable to activate off-line survey with URL {}. Status code: {}. Message {}".format(
+                                enketo_survey_url, r.status_code, r.text
                             )
                         )
                 except Exception as e:
