@@ -85,7 +85,7 @@ Start the plug-in
 
 ### The Enketo tools
 
-When the plug-in is activated the Enketo tools will appear in the "Links" section of the "Form Details" page.
+When the plug-in is activated the Enketo tools will appear in the "Form links and downloads" section of the "Form Details" page.
 
 ![](./screenshots/enketo_tools.png)
 
@@ -101,7 +101,7 @@ When the plug-in is activated the Enketo tools will appear in the "Links" sectio
 
 ### The "Thank you" page
 
-You can customize your "Thank you page" as you like. The Enketo plug-in uses [CKEditor](https://ckeditor.com/) to help you customize your "Thank you page".
+You can customize your "Thank you" page as you like. The Enketo plug-in uses [CKEditor](https://ckeditor.com/) to help you customize your "Thank you" page.
 
 ![](./screenshots/thank_editor.png)
 
@@ -109,7 +109,7 @@ You can customize your "Thank you page" as you like. The Enketo plug-in uses [CK
 2. Use the "Translate" button to translate the content of your page.
 3. Click on the "Preview" button to see the result.
 
-You can translate the "Thank you" page to any language. Click on the translate button to add a new language.
+You can translate the "Thank you" page to any language. Click on the "translate" button to add a new language.
 
 ![](./screenshots/translate.png)
 
@@ -118,4 +118,4 @@ The plug-in will copy the default content to the new language. You can have diff
 ![](./screenshots/translations.png)
 
 1. Use the language selector to move between the default screen and the languages that you have.
-2. Use the delete language button to delete any language.
+2. Use the "delete language" button to delete any language.
