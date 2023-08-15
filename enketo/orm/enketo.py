@@ -22,12 +22,12 @@ class EnketoFormMetadata(Base):
 
     project_id = Column(Unicode(64), primary_key=True, nullable=False)
     form_id = Column(Unicode(120), primary_key=True, nullable=False)
-    url_multi = Column(Unicode(120))
-    url_off_multi = Column(Unicode(120))
-    url_single = Column(Unicode(120))
-    url_once = Column(Unicode(120))
-    url_testing = Column(Unicode(120))
-    url_embeddable = Column(Unicode(120))
+    url_multi = Column(MEDIUMTEXT(collation="utf8mb4_unicode_ci"))
+    url_off_multi = Column(MEDIUMTEXT(collation="utf8mb4_unicode_ci"))
+    url_single = Column(MEDIUMTEXT(collation="utf8mb4_unicode_ci"))
+    url_once = Column(MEDIUMTEXT(collation="utf8mb4_unicode_ci"))
+    url_testing = Column(MEDIUMTEXT(collation="utf8mb4_unicode_ci"))
+    url_embeddable = Column(MEDIUMTEXT(collation="utf8mb4_unicode_ci"))
     return_url_content = Column(MEDIUMTEXT(collation="utf8mb4_unicode_ci"))
 
     project = relationship("Odkform")
@@ -47,6 +47,7 @@ class EnketoReturnContent(Base):
     project_id = Column(Unicode(64), primary_key=True, nullable=False)
     form_id = Column(Unicode(120), primary_key=True, nullable=False)
     language_code = Column(Unicode(10), primary_key=True, nullable=False)
+    language_name = Column(Unicode(120), primary_key=True, nullable=False)
     return_url_content = Column(MEDIUMTEXT(collation="utf8mb4_unicode_ci"))
 
     project = relationship("EnketoFormMetadata")

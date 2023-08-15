@@ -21,12 +21,32 @@ def upgrade():
         "enketo_form_metadata",
         sa.Column("project_id", sa.Unicode(length=64), nullable=False),
         sa.Column("form_id", sa.Unicode(length=120), nullable=False),
-        sa.Column("url_multi", sa.Unicode(length=120), nullable=True),
-        sa.Column("url_off_multi", sa.Unicode(length=120), nullable=True),
-        sa.Column("url_single", sa.Unicode(length=120), nullable=True),
-        sa.Column("url_once", sa.Unicode(length=120), nullable=True),
-        sa.Column("url_testing", sa.Unicode(length=120), nullable=True),
-        sa.Column("url_embeddable", sa.Unicode(length=120), nullable=True),
+        sa.Column(
+            "url_multi", mysql.MEDIUMTEXT(collation="utf8mb4_unicode_ci"), nullable=True
+        ),
+        sa.Column(
+            "url_off_multi",
+            mysql.MEDIUMTEXT(collation="utf8mb4_unicode_ci"),
+            nullable=True,
+        ),
+        sa.Column(
+            "url_single",
+            mysql.MEDIUMTEXT(collation="utf8mb4_unicode_ci"),
+            nullable=True,
+        ),
+        sa.Column(
+            "url_once", mysql.MEDIUMTEXT(collation="utf8mb4_unicode_ci"), nullable=True
+        ),
+        sa.Column(
+            "url_testing",
+            mysql.MEDIUMTEXT(collation="utf8mb4_unicode_ci"),
+            nullable=True,
+        ),
+        sa.Column(
+            "url_embeddable",
+            mysql.MEDIUMTEXT(collation="utf8mb4_unicode_ci"),
+            nullable=True,
+        ),
         sa.Column(
             "return_url_content",
             mysql.MEDIUMTEXT(collation="utf8mb4_unicode_ci"),
@@ -47,6 +67,7 @@ def upgrade():
         sa.Column("project_id", sa.Unicode(length=64), nullable=False),
         sa.Column("form_id", sa.Unicode(length=120), nullable=False),
         sa.Column("language_code", sa.Unicode(length=10), nullable=False),
+        sa.Column("language_name", sa.Unicode(length=120), nullable=False),
         sa.Column(
             "return_url_content",
             mysql.MEDIUMTEXT(collation="utf8mb4_unicode_ci"),

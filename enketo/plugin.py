@@ -46,13 +46,13 @@ class Enketo(plugins.SingletonPlugin):
                 "enketo_edit_thanks_page",
                 "/user/{userid}/project/{projcode}/form/{formid}/plugins/enketo/edit_thanks",
                 EditThanksPageView,
-                "templates/enketo/edit_thanks.jinja2",
+                "enketo/edit_thanks.jinja2",
             ),
             u.add_route(
                 "enketo_display_thanks_page",
                 "/user/{userid}/project/{projcode}/form/{formid}/plugins/enketo/thank_you",
                 DisplayThanksPageView,
-                "templates/enketo/display_thanks.jinja2",
+                "enketo/display_thanks.jinja2",
             ),
             u.add_route(
                 "enketo_upload_image",

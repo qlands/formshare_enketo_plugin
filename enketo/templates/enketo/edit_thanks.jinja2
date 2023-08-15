@@ -34,22 +34,82 @@
                 </div>
                 <div class="ibox-content">
                     {{ form.display_errors(errors) }}
-                    <form role="form" method="post" action="{{ request.url }}">
-                        {{ form.secure_form(request) }}
-                        <div class="card-body">
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-md-6">
+                            {% if languages|length > 0 %}
+                                {{ _('Language:') }}
+                                <select id="language_selector">
+                                    {% if language == None %}
+                                        <option selected value="{{ request.route_url("enketo_edit_thanks_page", userid=projectDetails.owner, projcode=projectDetails.project_code, formid=formDetails.form_id) }}">{{ _('Default') }}</option>
+                                        {% for a_language in languages %}
+                                            <option value="{{ request.route_url("enketo_edit_thanks_page", userid=projectDetails.owner, projcode=projectDetails.project_code, formid=formDetails.form_id, _query={"language": a_language.language_code}) }}">{{ a_language.language_name }}</option>
+                                        {% endfor %}
+                                    {% else %}
+                                        <option value="{{ request.route_url("enketo_edit_thanks_page", userid=projectDetails.owner, projcode=projectDetails.project_code, formid=formDetails.form_id) }}">{{ _('Default') }}</option>
+                                        {% for a_language in languages %}
+                                            <option {% if a_language.language_code == language %}selected{% endif %} value="{{ request.route_url("enketo_edit_thanks_page", userid=projectDetails.owner, projcode=projectDetails.project_code, formid=formDetails.form_id, _query={"language": a_language.language_code}) }}">{{ a_language.language_name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6" style="text-align: right">
+                            <button id="preview" class="btn btn-success page-tools">{{ _('Preview') }}</button>
+                        </div>
+                    </div>
+
+                    {{ form.secure_form(request) }}
+                    <div class="card-body">
+                        <form role="form" method="post" action="{{ request.url }}">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">{{ _('Content') }}</label>
+                                {{ form.secure_form(request) }}
                                 <textarea id="editor" class="form-control editor" name="page_content">{{ page_content }}</textarea>
                             </div>
+                            <button type="submit" name="save_contnet" class="btn btn-primary">{{ _('Save changes') }}</button>
+                            <button type="button" id="cancel_changes" class="btn btn-warning">{{ _('Cancel changes') }}</button>
+                            {% if language != None %}
+                                <button type="button" id="delete_language" class="btn btn-danger page-tools">{{ _('Delete language') }}</button>
+                            {% else %}
+                                <button type="button" id="translate" data-toggle="modal" data-target="#translate_window" class="btn btn-default page-tools">{{ _('Translate') }}</button>
+                            {% endif %}
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if language == None %}
+        <div class="modal inmodal" id="translate_window" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content animated bounceInRight">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ _('Close') }}</span></button>
+                        <i class="fas fa-language modal-icon"></i>
+                        <h4 class="modal-title">{{ _('Translate') }}</h4>
+                    </div>
+                    <form role="form" method="post" action="{{ request.url }}">
+                        {{ form.secure_form(request) }}
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>{{ _('Language code') }}</label>
+                                <input type="text" required name="language_code" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>{{ _('Language name') }}</label>
+                                <input type="text" required name="language_name" class="form-control">
+                            </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">{{ _('Save changes') }}</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-white" data-dismiss="modal">{{ _('Close') }}</button>
+                            <button type="submit" name="translate" class="btn btn-primary">{{ _('Translate') }}</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock mainsection %}
 
 {% block scripts %}
@@ -60,6 +120,58 @@
             height: 300,
             filebrowserUploadUrl: '{{ request.route_url("enketo_upload_image", userid=activeUser.login, projcode=projectDetails.project_code, formid=formDetails.form_id, _query={'command':'QuickUpload'})}}'
         });
+        {% if language == None %}
+            for (var i in CKEDITOR.instances) {
+                CKEDITOR.instances[i].on('change', function() {
+                    $('.page-tools').hide();
+                });
+            }
+        {% endif %}
+        $( "#cancel_changes" ).on( "click", function() {
+            location.href = "{{ request.url }}"
+        } );
+        {% if languages|length > 0 %}
+            $('#language_selector').on('change', function() {
+                location.href = this.value;
+            });
+        {% endif %}
+        {% if language != None %}
+            $('#delete_language').click(function () {
+                swal({
+                        title: "{{ _('Are you sure?') }}",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "{{ _('Yes, delete it!') }}",
+                        cancelButtonText: "{{ _('Oops, cancel!') }}",
+                        closeOnConfirm: true,
+                        closeOnCancel: true },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            var form = document.createElement('form');
+                            form.setAttribute('method', 'post');
+                            form.setAttribute('action', "{{ request.url }}");
+                            form.style.display = 'hidden';
+
+                            var i = document.createElement("input"); //input element, text
+                            i.setAttribute('type',"text");
+                            i.setAttribute('name',"csrf_token");
+                            i.setAttribute('value','{{ request.session.get_csrf_token() }}');
+                            form.appendChild(i);
+
+                            var i2 = document.createElement("input"); //input element, text
+                            i2.setAttribute('type',"text");
+                            i2.setAttribute('name',"delete_language");
+                            i2.setAttribute('value','');
+                            form.appendChild(i2);
+
+                            document.body.appendChild(form);
+                            $("#busy").show();
+                            form.submit();
+                        }
+                    });
+            });
+        {% endif %}
     </script>
 
 

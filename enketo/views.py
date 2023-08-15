@@ -5,7 +5,15 @@ import uuid
 import os
 import shutil
 import mimetypes
-from enketo.orm.processes import add_enketo_details
+from enketo.orm.processes import (
+    add_enketo_details,
+    get_enketo_details,
+    get_thanks_content,
+    update_thanks_content,
+    add_language,
+    get_languages,
+    delete_language,
+)
 from formshare.processes.db.project import (
     get_project_id_from_name,
     get_project_details,
@@ -148,11 +156,76 @@ class EditThanksPageView(u.FormSharePrivateView):
         form_data = get_form_data(self.request, project_id, form_id)
         if form_data is None:
             raise HTTPNotFound
-        page_content = ""
+
+        enketo_details = get_enketo_details(self.request, project_id, form_id)
+        if enketo_details is None:
+            raise HTTPNotFound
+
+        language_code = self.request.params.get("language", None)
+        if self.request.method == "POST":
+            post_details = self.get_post_dict()
+            if "translate" in post_details.keys():
+                current_content = get_thanks_content(
+                    self.request, project_id, form_id, None
+                )
+                language_code = post_details.get("language_code", "")
+                language_name = post_details.get("language_name", "")
+                if language_code != "" and language_name != "":
+                    added, message = add_language(
+                        self.request,
+                        project_id,
+                        form_id,
+                        language_code,
+                        language_name,
+                        current_content,
+                    )
+                    if added:
+                        self.returnRawViewResult = True
+                        return HTTPFound(
+                            self.request.route_url(
+                                "enketo_edit_thanks_page",
+                                userid=user_id,
+                                projcode=project_code,
+                                formid=form_id,
+                                _query={"language": language_code},
+                            )
+                        )
+            if "delete_language" in post_details.keys():
+                delete_language(self.request, project_id, form_id, language_code)
+                self.returnRawViewResult = True
+                return HTTPFound(
+                    self.request.route_url(
+                        "enketo_edit_thanks_page",
+                        userid=user_id,
+                        projcode=project_code,
+                        formid=form_id,
+                    )
+                )
+            update_thanks_content(
+                self.request,
+                project_id,
+                form_id,
+                post_details["page_content"],
+                language_code,
+            )
+            self.returnRawViewResult = True
+            return HTTPFound(self.request.url)
+
+        languages = get_languages(self.request, project_id, form_id)
+
+        page_content = get_thanks_content(
+            self.request, project_id, form_id, language_code
+        )
+        if page_content is None and language_code is not None:
+            raise HTTPNotFound
+        if page_content is None:
+            page_content = self._("Thank you for your response")
         return {
             "projectDetails": project_details,
             "formDetails": form_data,
             "page_content": page_content,
+            "language": language_code,
+            "languages": languages,
         }
 
 
