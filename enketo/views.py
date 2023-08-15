@@ -233,7 +233,8 @@ class PageUploadImageView(u.FormSharePrivateView):
     def __init__(self, request):
         u.FormSharePrivateView.__init__(self, request)
         self.checkCrossPost = False
-        self.checkCRF = False
+        self.checkCSRF = False
+        self.returnRawViewResult = True
 
     def process_view(self):
         if self.request.method == "POST":
