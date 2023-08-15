@@ -14,9 +14,9 @@
             </span>
         </div>
     {% else %}
-        {{ _('Browser data collection') }}:<br/>
+        {{ _('Web browser data collection') }}:<br/>
         <div class="input-group">
-            <select id="enketo_urls" readonly class="form-control">
+            <select style="font-size: 12px" id="enketo_urls" readonly class="form-control">
                 <option value="{{ enketo_metadata.url_multi }}">{{ _('Online-Only (multiple submissions)') }}</option>
                 <option value="{{ enketo_metadata.url_off_multi }}">{{ _('Online-Offline (multiple submission)') }}</option>
                 <option value="{{ enketo_metadata.url_single }}">{{ _('Online-Only (single submission)') }}</option>

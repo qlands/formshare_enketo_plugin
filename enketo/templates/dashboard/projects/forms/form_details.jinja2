@@ -24,7 +24,7 @@
     {% endif %}
     <script>
         $('#enketo_urls').on('change', function() {
-            $('#enketo_url_copy').data('clipboard-text', this.value);
+            $('#enketo_url_copy').attr('data-clipboard-text', this.value);
             $('#enketo_url_play').attr("href", this.value);
         });
     </script>
