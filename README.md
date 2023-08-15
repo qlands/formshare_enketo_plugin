@@ -80,3 +80,42 @@ Start the plug-in
   enketo.apikey = myNewSecretAPIKey
   ```
 - Run FormShare again
+
+## Use the plugin
+
+### The Enketo tools
+
+When the plug-in is activated the Enketo tools will appear in the "Links" section of the "Form Details" page.
+
+![](./screenshots/enketo_tools.png)
+
+1. Submission type. There are multiple URLs for collecting data. You can select one of the submissions types:
+   - Online-Only (multiple submissions)
+   - Online-Offline (multiple submission)
+   - Online-Only (single submission). After the submitting the data, Enketo will redirect the user to the "Thank you page".
+   - Online-only (once per respondent). This will allow only one respondent per computer. After the submitting the data, Enketo will redirect the user to the "Thank you page".
+   - View only (for testing). This URL will not submit any data.
+2. Click on this button to copy the current URL.
+3. Click on this button to start collecting data using the current submission type.
+4. You can configure the "Thank you" page for "single submission" and "once per respondent".
+
+### The "Thank you" page
+
+You can customize your "Thank you page" as you like. The Enketo plug-in uses [CKEditor](https://ckeditor.com/) to help you customize your "Thank you page".
+
+![](./screenshots/thank_editor.png)
+
+1. Use the page editor to edit your thank you page. You can upload images, add tables, links, colors, etc.
+2. Use the "Translate" button to translate the content of your page.
+3. Click on the "Preview" button to see the result.
+
+You can translate the "Thank you" page to any language. Click on the translate button to add a new language.
+
+![](./screenshots/translate.png)
+
+The plug-in will copy the default content to the new language. You can have different content in each language.
+
+![](./screenshots/translations.png)
+
+1. Use the language selector to move between the default screen and the languages that you have.
+2. Use the delete language button to delete any language.
