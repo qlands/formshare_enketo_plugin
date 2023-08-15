@@ -153,3 +153,5 @@ def add_language(request, project_id, form_id, language_code, language_name, con
                 )
             )
             return False, str(e)
+    else:
+        return False, "Language already exists"

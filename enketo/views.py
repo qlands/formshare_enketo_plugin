@@ -170,6 +170,8 @@ class EditThanksPageView(u.FormSharePrivateView):
                 current_content = get_thanks_content(
                     self.request, project_id, form_id, None
                 )
+                if current_content is None:
+                    current_content = ""
                 language_code = post_details.get("language_code", "")
                 language_name = post_details.get("language_name", "")
                 if language_code != "" and language_name != "":
