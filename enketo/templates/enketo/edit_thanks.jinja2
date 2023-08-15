@@ -94,11 +94,11 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>{{ _('Language code') }}</label>
-                                <input type="text" required name="language_code" class="form-control">
+                                <input type="text" maxlength="10" id="language_code" required name="language_code" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>{{ _('Language name') }}</label>
-                                <input type="text" required name="language_name" class="form-control">
+                                <input type="text" maxlength="100" required name="language_name" class="form-control">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -177,6 +177,15 @@
                             form.submit();
                         }
                     });
+            });
+        {% else %}
+            $('#language_code').on('keypress paste', function (event) {
+                var regex = new RegExp("^[a-zA-Z0-9]+$");
+                var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+                if (!regex.test(key)) {
+                    event.preventDefault();
+                    return false;
+                }
             });
         {% endif %}
     </script>
