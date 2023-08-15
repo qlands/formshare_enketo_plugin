@@ -14,6 +14,7 @@ from enketo.orm.processes import (
     get_languages,
     delete_language,
 )
+from formshare.processes.odk import get_odk_path
 from formshare.processes.db.project import (
     get_project_id_from_name,
     get_project_details,
@@ -23,6 +24,7 @@ import requests
 import logging
 from urllib.parse import urljoin
 from pyramid.response import FileResponse
+from webhelpers2.html import literal
 
 log = logging.getLogger("formshare")
 
@@ -260,14 +262,19 @@ class PageUploadImageView(u.FormSharePrivateView):
             input_file = self.request.POST["upload"].file
             input_file_name = self.request.POST["upload"].filename.lower()
             name, extension = os.path.splitext(input_file_name)
-            repository_path = form_data["form_directory"]
 
-            paths = [repository_path, "enketo_upload"]
+            repository_path = get_odk_path(self.request)
+            paths = ["forms", form_data["form_directory"], "enketo_upload"]
             upload_path = os.path.join(repository_path, *paths)
             if not os.path.exists(upload_path):
                 os.makedirs(upload_path)
 
-            paths = [repository_path, "enketo_upload", uid + extension]
+            paths = [
+                "forms",
+                form_data["form_directory"],
+                "enketo_upload",
+                uid + extension,
+            ]
             target_file = os.path.join(repository_path, *paths)
             input_file.seek(0)
             with open(target_file, "wb") as permanent_file:
@@ -301,8 +308,8 @@ class PageGetImageView(u.FormSharePublicView):
             raise HTTPNotFound
 
         image_id = self.request.matchdict["imageid"]
-        repository_path = form_data["form_directory"]
-        paths = [repository_path, "enketo_upload", image_id]
+        repository_path = get_odk_path(self.request)
+        paths = ["forms", form_data["form_directory"], "enketo_upload", image_id]
 
         file_path = os.path.join(repository_path, *paths)
         content_type, content_enc = mimetypes.guess_type(file_path)
@@ -315,4 +322,33 @@ class PageGetImageView(u.FormSharePublicView):
 
 class DisplayThanksPageView(u.FormSharePublicView):
     def process_view(self):
-        return {}
+        user_id = self.request.matchdict["userid"]
+        project_code = self.request.matchdict["projcode"]
+        form_id = self.request.matchdict["formid"]
+        project_id = get_project_id_from_name(self.request, user_id, project_code)
+
+        if project_id is None:
+            raise HTTPNotFound
+
+        project_details = get_project_details(self.request, project_id)
+
+        form_data = get_form_data(self.request, project_id, form_id)
+        if form_data is None:
+            raise HTTPNotFound
+
+        language_code = self.request.params.get("language", None)
+        page_content = get_thanks_content(
+            self.request, project_id, form_id, language_code
+        )
+        if page_content is None and language_code is not None:
+            raise HTTPNotFound
+        if page_content is None:
+            page_content = self._("Thank you for your response")
+        languages = get_languages(self.request, project_id, form_id)
+        return {
+            "page_content": literal(page_content),
+            "languages": languages,
+            "language": language_code,
+            "projectDetails": project_details,
+            "formDetails": form_data,
+        }

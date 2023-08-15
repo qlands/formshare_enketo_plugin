@@ -130,6 +130,13 @@
         $( "#cancel_changes" ).on( "click", function() {
             location.href = "{{ request.url }}"
         } );
+        $( "#preview" ).on( "click", function() {
+            {% if language == None %}
+                window.open('{{ request.route_url("enketo_display_thanks_page", userid=projectDetails.owner, projcode=projectDetails.project_code, formid=formDetails.form_id) }}', '_blank');
+            {% else %}
+                window.open('{{ request.route_url("enketo_display_thanks_page", userid=projectDetails.owner, projcode=projectDetails.project_code, formid=formDetails.form_id, _query={"language": language}) }}', '_blank');
+            {% endif %}
+        } );
         {% if languages|length > 0 %}
             $('#language_selector').on('change', function() {
                 location.href = this.value;

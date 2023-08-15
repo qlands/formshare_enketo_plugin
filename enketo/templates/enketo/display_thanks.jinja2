@@ -1,10 +1,25 @@
 {% extends 'landing/page.jinja2' %}
 
+{% block topScripts %}
+    {% jsresource request,'formshare','pace' %}
+{% endblock topScripts %}
+
 {% block pageheader %}
-    {#    {% set in_landing = True %}#}
-    {#    {% include 'landing/snippets/header.jinja2' %}#}
+    {% include 'enketo/snippets/header.jinja2' %}
 {% endblock pageheader %}
 
 {% block maincontent %}
-    
+    {{ page_content }}
 {% endblock maincontent %}
+
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        {% if languages|length > 0 %}
+            $('#language_selector').on('change', function() {
+                location.href = this.value;
+            });
+        {% endif %}
+    </script>
+{% endblock scripts %}
