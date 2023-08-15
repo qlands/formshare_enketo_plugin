@@ -92,8 +92,8 @@ When the plug-in is activated the Enketo tools will appear in the "Links" sectio
 1. Submission type. There are multiple URLs for collecting data. You can select one of the submissions types:
    - Online-Only (multiple submissions)
    - Online-Offline (multiple submission)
-   - Online-Only (single submission). After the submitting the data, Enketo will redirect the user to the "Thank you page".
-   - Online-only (once per respondent). This will allow only one respondent per computer. After the submitting the data, Enketo will redirect the user to the "Thank you page".
+   - Online-Only (single submission). After submitting the data, Enketo will redirect the user to the "Thank you page".
+   - Online-only (once per respondent). This will allow only one respondent per computer. After submitting the data, Enketo will redirect the user to the "Thank you page".
    - View only (for testing). This URL will not submit any data.
 2. Click on this button to copy the current URL.
 3. Click on this button to start collecting data using the current submission type.
@@ -105,7 +105,7 @@ You can customize your "Thank you page" as you like. The Enketo plug-in uses [CK
 
 ![](./screenshots/thank_editor.png)
 
-1. Use the page editor to edit your thank you page. You can upload images, add tables, links, colors, etc.
+1. Use the page editor to edit your "thank you" page. You can upload images, add tables, links, colors, etc.
 2. Use the "Translate" button to translate the content of your page.
 3. Click on the "Preview" button to see the result.
 
