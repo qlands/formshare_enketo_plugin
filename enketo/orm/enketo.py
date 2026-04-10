@@ -1,5 +1,4 @@
 from formshare.models.meta import Base
-from formshare.models.formshare import Odkform
 from sqlalchemy.dialects.mysql import MEDIUMTEXT
 from sqlalchemy.orm import relationship
 from sqlalchemy import (

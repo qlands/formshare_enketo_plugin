@@ -1,5 +1,5 @@
 import formshare.plugins.utilities as u
-from pyramid.httpexceptions import HTTPNotFound, HTTPFound
+from formshare.middleware.httpexceptions import HTTPNotFound, HTTPFound
 import json
 import uuid
 import os
@@ -23,7 +23,7 @@ from formshare.processes.db.project import (
 import requests
 import logging
 from urllib.parse import urljoin
-from pyramid.response import FileResponse
+from formshare.middleware.response import FileResponse
 from webhelpers2.html import literal
 
 log = logging.getLogger("formshare")

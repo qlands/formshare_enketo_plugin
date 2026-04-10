@@ -8,7 +8,7 @@ with open(os.path.join(here, "README.md")) as f:
 with open(os.path.join(here, "CHANGES.txt")) as f:
     CHANGES = f.read()
 
-requires = ["formshare >= 2.27.0"]
+requires = ["formshare"]
 
 tests_require = ["WebTest >= 1.3.1", "pytest", "pytest-cov"]  # py3 compat
 
@@ -19,7 +19,7 @@ setup(
     long_description=README + "\n\n" + CHANGES,
     classifiers=[
         "Programming Language :: Python",
-        "Framework :: Pyramid",
+        "Framework :: FastAPI",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
     ],
