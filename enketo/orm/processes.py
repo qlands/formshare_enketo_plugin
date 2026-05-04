@@ -32,7 +32,7 @@ def add_enketo_details(request, enketo_details):
         new_enketo_data = EnketoFormMetadata(**mapped_data)
         try:
             request.dbsession.add(new_enketo_data)
-            request.dbsession.flush()
+            request.dbsession.commit()
         except IntegrityError:
             request.dbsession.rollback()
             log.error(
